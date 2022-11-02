@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="RemoteRepositoriesConfiguration">
+    <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="Central Repository" />
+      <option name="url" value="https://repo.maven.apache.org/maven2" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="release-repository-external" />
+      <option name="name" value="release-repository-external" />
+      <option name="url" value="https://af2.corpo.t-mobile.pl/artifactory/cindy-maven-remote-repositories" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="Central Repository" />
+      <option name="url" value="https://af2.corpo.t-mobile.pl/artifactory/cindy-maven-remote-repositories" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="Maven Central repository" />
+      <option name="url" value="https://repo1.maven.org/maven2" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="snapshot-repository" />
+      <option name="name" value="snapshot-repository" />
+      <option name="url" value="https://af2.corpo.t-mobile.pl/cindy-maven-projects" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="jboss.community" />
+      <option name="name" value="JBoss Community repository" />
+      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="release-repository" />
+      <option name="name" value="release-repository" />
+      <option name="url" value="https://af2.corpo.t-mobile.pl/cindy-maven-releases" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="cindy-deployment-repository" />
+      <option name="name" value="cindy-deployment-repository" />
+      <option name="url" value="https://af2.corpo.t-mobile.pl/maven2-central/" />
+    </remote-repository>
+  </component>
+</project>
