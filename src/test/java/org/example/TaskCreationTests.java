@@ -25,5 +25,21 @@ public class TaskCreationTests extends BaseSetup {
 
     }
 
+    @Test
+    public void userCanCreateATaskOutsideProject() {
+        var taskName = "Zadanie nieprzypisane do żadnego projektu";
+        String taskId = steps.userCreatesANewTaskOutsideProject(taskName);
+        steps.userChecksIfTaskOutsideProjectIsCreated(taskId, taskName);
+    }
+
+    @Test
+    public void userCanDeleteATaskOutsideProject() {
+        var taskName = "Zadanie testowe do skasowania";
+        String taskId = steps.userCreatesANewTaskOutsideProject(taskName);
+        steps.userChecksIfTaskOutsideProjectIsCreated(taskId, taskName);
+        steps.userDeletesATaskOutsideProject(taskId);
+    }
+
+
 
 }

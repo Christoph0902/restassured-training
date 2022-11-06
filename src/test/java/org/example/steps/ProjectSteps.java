@@ -5,6 +5,7 @@ import io.restassured.http.ContentType;
 import org.hamcrest.Matchers;
 
 import static java.lang.String.format;
+import static org.hamcrest.Matchers.blankOrNullString;
 
 public class ProjectSteps {
 
@@ -60,4 +61,41 @@ public class ProjectSteps {
                 .extract().path("id");
         return projectId;
     }
-}
+
+    public String userCreatesANewFavoriteProject(String favoriteProjectName) {
+
+        String favoriteProjectId = RestAssured
+                .given()
+                .contentType(ContentType.JSON)
+                .body(format("{\"name\": \"%s\", \"is_favorite\": \"%s\"}",favoriteProjectName,true))
+                .log().all()
+                .when()
+                .post("/projects")
+                .then()
+                .log().all()
+                .assertThat()
+                .statusCode(200)
+                .body("name", Matchers.equalTo(favoriteProjectName))
+                .header("Content-Type", Matchers.equalTo("application/json"))
+                .and()
+                .extract().path("id","is_favorite");
+        return favoriteProjectId;
+    }
+
+    public void userDeletesAProject(String projectId) {
+
+            RestAssured
+                    .given()
+                    .pathParam("id", projectId)
+                    .contentType(ContentType.JSON)
+                    .log().all()
+                    .when()
+                    .delete("/projects/{id}")
+                    .then()
+                    .log().all()
+                    .assertThat()
+                    .statusCode(204)
+                    .body(blankOrNullString());
+        }
+    }
+

@@ -15,11 +15,10 @@ import static java.lang.String.format;
 public class ProjectCreationTests extends BaseSetup {
 
     String projectName = "Lepsze szkolenie RestAssured";
+    String projectToBeDeleted = "Projekt do skasowania";
+    String favoriteProjectName = "Mój ulubiony projekt";
 
     ProjectSteps steps = new ProjectSteps();
-
-
-
 
     @Test
     public void userCanCreateANewProject() {
@@ -31,5 +30,18 @@ public class ProjectCreationTests extends BaseSetup {
 
     }
 
+    @Test
+    public void userCanDeleteAProject() {
+        var projectId = steps.userCreatesANewProject(projectToBeDeleted);
+        steps.userChecksProjectDetails(projectId,projectToBeDeleted);
+        steps.userDeletesAProject(projectId);
+    }
+
+    @Test
+    public void userCanCreateAFavoriteProject() {
+        var favoriteProjectId = steps.userCreatesANewFavoriteProject(favoriteProjectName);
+        steps.userChecksProjectDetails(favoriteProjectId, favoriteProjectName);
+        steps.userChecksAllProjectsList(favoriteProjectId, favoriteProjectName);
+    }
 
 }

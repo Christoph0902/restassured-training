@@ -5,17 +5,37 @@ import io.restassured.http.ContentType;
 import org.hamcrest.Matchers;
 
 import static java.lang.String.format;
+import static org.hamcrest.Matchers.blankOrNullString;
 
 public class TaskSteps {
 
     public String userCreatesANewTask(String taskName, String projectId) {
 
-
-
         String taskId = RestAssured
                 .given()
                 .contentType(ContentType.JSON)
                 .body(format("{\"content\": \"%s\", \"project_id\": \"%s\"}",taskName,projectId))
+                .log().all()
+                .when()
+                .post("/tasks")
+                .then()
+                .log().all()
+                .assertThat()
+                .statusCode(200)
+                .body("content", Matchers.equalTo(taskName))
+                .header("Content-Type", Matchers.equalTo("application/json"))
+                .and()
+                .extract().path("id");
+        return taskId;
+
+    }
+
+    public String userCreatesANewTaskOutsideProject(String taskName) {
+
+        String taskId = RestAssured
+                .given()
+                .contentType(ContentType.JSON)
+                .body(format("{\"content\": \"%s\"}",taskName))
                 .log().all()
                 .when()
                 .post("/tasks")
@@ -44,6 +64,39 @@ public class TaskSteps {
                 .statusCode(200)
                 .body("id", Matchers.equalTo(taskId))
                 .body("content", Matchers.equalTo(taskName));
+    }
+
+    public void userChecksIfTaskOutsideProjectIsCreated(String taskId, String taskName) {
+        RestAssured
+                .given()
+                .pathParam("id", taskId)
+                .log().all()
+                .when()
+                .get("/tasks/{id}")
+                .then()
+                .log().all()
+                .assertThat()
+                .statusCode(200)
+                .body("id", Matchers.equalTo(taskId))
+                .body("content", Matchers.equalTo(taskName));
+    }
+
+    public void userDeletesATaskOutsideProject(String taskId) {
+
+//        String deletedTaskId =
+        RestAssured
+                .given()
+                .pathParam("id", taskId)
+                .contentType(ContentType.JSON)
+                .body(format("{\"content\": \"%s\"}",taskId))
+                .log().all()
+                .when()
+                .delete("/tasks/{id}")
+                .then()
+                .log().all()
+                .assertThat()
+                .statusCode(204)
+                .body(blankOrNullString());
     }
 
     public void userChecksAllTasksList(String taskId, String taskName) {
