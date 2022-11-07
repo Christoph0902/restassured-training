@@ -2,6 +2,8 @@ package org.example.steps;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import net.serenitybdd.rest.SerenityRest;
+import net.thucydides.core.annotations.Step;
 import org.hamcrest.Matchers;
 
 import static java.lang.String.format;
@@ -9,9 +11,10 @@ import static org.hamcrest.Matchers.blankOrNullString;
 
 public class ProjectSteps {
 
+    @Step
     public void userChecksAllProjectsList(String projectId, String projectName) {
 
-        RestAssured
+        SerenityRest
                 .given()
                 .log().all()
                 .when()
@@ -26,9 +29,10 @@ public class ProjectSteps {
 
     }
 
+    @Step
     public void userChecksProjectDetails(String projectId, String projectName) {
 
-        RestAssured
+        SerenityRest
                 .given()
                 .pathParam("id", projectId)
                 .log().all()
@@ -42,9 +46,10 @@ public class ProjectSteps {
                 .body("name", Matchers.equalTo(projectName));
     }
 
+    @Step
     public String userCreatesANewProject(String projectName) {
 
-        String projectId = RestAssured
+        String projectId = SerenityRest
                 .given()
                 .contentType(ContentType.JSON)
                 .body("{\"name\":\""+ projectName + "\"}")
@@ -62,9 +67,10 @@ public class ProjectSteps {
         return projectId;
     }
 
+    @Step
     public String userCreatesANewFavoriteProject(String favoriteProjectName) {
 
-        String favoriteProjectId = RestAssured
+        String favoriteProjectId = SerenityRest
                 .given()
                 .contentType(ContentType.JSON)
                 .body(format("{\"name\": \"%s\", \"is_favorite\": \"%s\"}",favoriteProjectName,true))
@@ -82,9 +88,10 @@ public class ProjectSteps {
         return favoriteProjectId;
     }
 
+    @Step
     public void userDeletesAProject(String projectId) {
 
-            RestAssured
+            SerenityRest
                     .given()
                     .pathParam("id", projectId)
                     .contentType(ContentType.JSON)

@@ -25,6 +25,12 @@
             <version>5.9.1</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>net.serenity-bdd</groupId>
+            <artifactId>serenity-junit5</artifactId>
+            <version>3.3.10</version>
+        </dependency>
+
 
 
     </dependencies>

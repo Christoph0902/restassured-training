@@ -2,6 +2,8 @@ package org.example.steps;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import net.serenitybdd.rest.SerenityRest;
+import net.thucydides.core.annotations.Step;
 import org.hamcrest.Matchers;
 
 import static java.lang.String.format;
@@ -9,9 +11,10 @@ import static org.hamcrest.Matchers.blankOrNullString;
 
 public class TaskSteps {
 
+    @Step
     public String userCreatesANewTask(String taskName, String projectId) {
 
-        String taskId = RestAssured
+        String taskId = SerenityRest
                 .given()
                 .contentType(ContentType.JSON)
                 .body(format("{\"content\": \"%s\", \"project_id\": \"%s\"}",taskName,projectId))
@@ -30,9 +33,10 @@ public class TaskSteps {
 
     }
 
+    @Step
     public String userCreatesANewTaskOutsideProject(String taskName) {
 
-        String taskId = RestAssured
+        String taskId = SerenityRest
                 .given()
                 .contentType(ContentType.JSON)
                 .body(format("{\"content\": \"%s\"}",taskName))
@@ -51,8 +55,9 @@ public class TaskSteps {
 
     }
 
+    @Step
     public void userChecksIfTaskIsCreated(String taskId, String taskName) {
-        RestAssured
+        SerenityRest
                 .given()
                 .pathParam("id", taskId)
                 .log().all()
@@ -66,8 +71,10 @@ public class TaskSteps {
                 .body("content", Matchers.equalTo(taskName));
     }
 
+    @Step
     public void userChecksIfTaskOutsideProjectIsCreated(String taskId, String taskName) {
-        RestAssured
+
+        SerenityRest
                 .given()
                 .pathParam("id", taskId)
                 .log().all()
@@ -81,10 +88,10 @@ public class TaskSteps {
                 .body("content", Matchers.equalTo(taskName));
     }
 
+    @Step
     public void userDeletesATaskOutsideProject(String taskId) {
 
-//        String deletedTaskId =
-        RestAssured
+        SerenityRest
                 .given()
                 .pathParam("id", taskId)
                 .contentType(ContentType.JSON)
@@ -99,9 +106,10 @@ public class TaskSteps {
                 .body(blankOrNullString());
     }
 
+    @Step
     public void userChecksAllTasksList(String taskId, String taskName) {
 
-        RestAssured
+        SerenityRest
                 .given()
                 .log().all()
                 .when()

@@ -1,18 +1,16 @@
 package org.example;
 
-import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
+import net.thucydides.core.annotations.Steps;
 import org.example.steps.ProjectSteps;
 import org.example.steps.TaskSteps;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
-
-import static java.lang.String.format;
 
 public class TaskCreationTests extends BaseSetup {
 
-    ProjectSteps precondition = new ProjectSteps();
-    TaskSteps steps = new TaskSteps();
+    @Steps
+    ProjectSteps precondition;
+    @Steps
+    TaskSteps steps;
 
     @Test
     public void userCanAddTaskToTheProject() {
@@ -39,7 +37,5 @@ public class TaskCreationTests extends BaseSetup {
         steps.userChecksIfTaskOutsideProjectIsCreated(taskId, taskName);
         steps.userDeletesATaskOutsideProject(taskId);
     }
-
-
 
 }
