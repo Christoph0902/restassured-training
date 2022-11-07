@@ -6,21 +6,32 @@ import net.serenitybdd.junit5.SerenityJUnit5Extension;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import java.io.IOException;
+import java.util.Properties;
+
 
 @ExtendWith(SerenityJUnit5Extension.class)
 public class BaseSetup {
 
     @BeforeAll
-    public static void setup() {
+    public static void setup() throws IOException {
 
-        RequestSpecBuilder builder = new RequestSpecBuilder();
-        builder.setBaseUri("https://api.todoist.com")
-                .setBasePath("/rest/v2")
-                .addHeader("Authorization", "Bearer 3d805d60a854c15ef18a760c629963b5030fd4a2")
+        var fileName = System.getProperty("env") + "_env.properties";
+
+        var builder = new RequestSpecBuilder();
+        var file = builder.getClass().getResourceAsStream("/" + fileName);
+
+        var configuration = new Properties();
+
+        configuration.load(file);
+
+        var reqSpec = builder
+                .setBaseUri(configuration.getProperty("todoist_url"))
+                .setBasePath(configuration.getProperty("todoist_basePath"))
+                .addHeader("Authorization", "Bearer " + configuration.getProperty("todoist_token"))
 //               .log(LogDetail.ALL)
                 .build();
-        RestAssured.requestSpecification = builder.build();
-
+        RestAssured.requestSpecification = reqSpec;
 //        RestAssured.responseSpecification = new ResponseSpecBuilder()
 //        .log(LogDetail.ALL).build();
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails(); // logi jeśli asercje sfailują
