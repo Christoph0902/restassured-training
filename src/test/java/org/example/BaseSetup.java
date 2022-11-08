@@ -1,17 +1,22 @@
 package org.example;
 
+import com.github.javafaker.Faker;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import net.serenitybdd.junit5.SerenityJUnit5Extension;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 
 import java.io.IOException;
 import java.util.Properties;
 
-
+@Execution(ExecutionMode.CONCURRENT)
 @ExtendWith(SerenityJUnit5Extension.class)
 public class BaseSetup {
+
+    Faker generator = new Faker();
 
     @BeforeAll
     public static void setup() throws IOException {
@@ -22,7 +27,6 @@ public class BaseSetup {
         var file = builder.getClass().getResourceAsStream("/" + fileName);
 
         var configuration = new Properties();
-
         configuration.load(file);
 
         var reqSpec = builder

@@ -14,8 +14,8 @@ public class TaskCreationTests extends BaseSetup {
 
     @Test
     public void userCanAddTaskToTheProject() {
-        var projectName = "Projekt do tworzenia zadań";
-        var taskName = "Pierwsze zadanie w projekcie";
+        var projectName = generator.book().genre();
+        var taskName =  generator.book().title();
         var projectId = precondition.userCreatesANewProject(projectName);
         String taskId = steps.userCreatesANewTask(taskName, projectId);
         steps.userChecksIfTaskIsCreated(taskId,taskName);
@@ -25,14 +25,14 @@ public class TaskCreationTests extends BaseSetup {
 
     @Test
     public void userCanCreateATaskOutsideProject() {
-        var taskName = "Zadanie nieprzypisane do żadnego projektu";
+        var taskName = generator.lordOfTheRings().location();
         String taskId = steps.userCreatesANewTaskOutsideProject(taskName);
         steps.userChecksIfTaskOutsideProjectIsCreated(taskId, taskName);
     }
 
     @Test
     public void userCanDeleteATaskOutsideProject() {
-        var taskName = "Zadanie testowe do skasowania";
+        var taskName = generator.ancient().god();
         String taskId = steps.userCreatesANewTaskOutsideProject(taskName);
         steps.userChecksIfTaskOutsideProjectIsCreated(taskId, taskName);
         steps.userDeletesATaskOutsideProject(taskId);

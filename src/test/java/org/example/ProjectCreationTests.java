@@ -11,8 +11,7 @@ public class ProjectCreationTests extends BaseSetup {
 
     @Test
     public void userCanCreateANewProject() {
-
-        var projectName = "Lepsze szkolenie RestAssured";
+        var projectName = generator.lebowski().character();
         var projectId = steps.userCreatesANewProject(projectName);
         steps.userChecksProjectDetails(projectId,projectName);
         steps.userChecksAllProjectsList(projectId, projectName);
@@ -20,8 +19,7 @@ public class ProjectCreationTests extends BaseSetup {
 
     @Test
     public void userCanDeleteAProject() {
-
-        var projectToBeDeleted = "Projekt do skasowania";
+        var projectToBeDeleted = generator.artist().name();
         var projectId = steps.userCreatesANewProject(projectToBeDeleted);
         steps.userChecksProjectDetails(projectId,projectToBeDeleted);
         steps.userDeletesAProject(projectId);
@@ -29,8 +27,7 @@ public class ProjectCreationTests extends BaseSetup {
 
     @Test
     public void userCanCreateAFavoriteProject() {
-
-        String favoriteProjectName = "Mój ulubiony projekt";
+        String favoriteProjectName = generator.funnyName().name();
         var favoriteProjectId = steps.userCreatesANewFavoriteProject(favoriteProjectName);
         steps.userChecksProjectDetails(favoriteProjectId, favoriteProjectName);
         steps.userChecksAllProjectsList(favoriteProjectId, favoriteProjectName);

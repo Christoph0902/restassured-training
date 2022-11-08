@@ -4,6 +4,8 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import net.serenitybdd.rest.SerenityRest;
 import net.thucydides.core.annotations.Step;
+import org.example.model.NewProjectPayload;
+import org.example.model.NewTaskPayload;
 import org.hamcrest.Matchers;
 
 import static java.lang.String.format;
@@ -20,10 +22,13 @@ public class TaskSteps {
 
     @Step
     public Response sendCreateANewTaskRequest(String taskName, String projectId) {
+
+        NewTaskPayload payload = new NewTaskPayload(taskName,projectId);
         return SerenityRest
                 .given()
                 .contentType(ContentType.JSON)
-                .body(format("{\"content\": \"%s\", \"project_id\": \"%s\"}",taskName,projectId))
+//                .body(format("{\"content\": \"%s\", \"project_id\": \"%s\"}",taskName,projectId))
+                .body(payload)
                 .when()
                 .post("/tasks");
     }
@@ -48,10 +53,12 @@ public class TaskSteps {
 
     @Step
     public Response sendCreateANewTaskOutsideProjectRequest(String taskName) {
+        NewTaskPayload payload = new NewTaskPayload(taskName);
         return SerenityRest
                 .given()
                 .contentType(ContentType.JSON)
-                .body(format("{\"content\": \"%s\"}",taskName))
+//                .body(format("{\"content\": \"%s\"}",taskName))
+                .body(payload)
                 .when()
                 .post("/tasks");
     }
